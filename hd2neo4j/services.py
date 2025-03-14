@@ -1,8 +1,8 @@
 from .neo4j.mapper import Mapper
 from .neo4j.repository import Neo4jRepository
 import json
-from uprchat.app.config import get_settings
-from uprchat.mapper.mapping_config.mapping_config import (
+from hd2neo4j.config import get_settings
+from hd2neo4j.mapping_config.mapping_config import (
     MappingConfig,
 )
 import logging
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class RepositoryService:
     st = get_settings()
-    repository = Neo4jRepository(st.neo4j_uri, st.neo4j_user, st.neo4j_pass, st.neo4j_bb)
+    repository = Neo4jRepository(st.neo4j_uri, st.neo4j_user, st.neo4j_pass, st.neo4j_db)
 
     def __init__(self):
         super().__init__()

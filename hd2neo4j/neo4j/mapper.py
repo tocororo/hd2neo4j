@@ -1,12 +1,12 @@
-from uprchat.mapper.mapping_config.mapping_config import (
+from hd2neo4j.mapping_config.mapping_config import (
     MappingConfig,
     EntityMapping,
 )
-from uprchat.mapper.utils.data_iterator import Data_Iterator
+from hd2neo4j.utils.data_iterator import Data_Iterator
 from ..types.mapper_types import Node, Relation
 import uuid as uuid_pkg
-from uprchat.mapper.neo4j.repository import Neo4jRepository
-from uprchat.mapper.vectors.vectorizer import VectorManager
+from hd2neo4j.neo4j.repository import Neo4jRepository
+from hd2neo4j.vectors.vectorizer import VectorManager
 import logging
 
 logger = logging.getLogger(__name__)

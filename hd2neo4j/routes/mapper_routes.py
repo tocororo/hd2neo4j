@@ -1,6 +1,6 @@
 from fastapi import APIRouter, File
 from typing import Annotated
-from uprchat.mapper.services import MapperService, RepositoryService
+from hd2neo4j.services import MapperService, RepositoryService
 
 rt = APIRouter(
     prefix="/mapper",

@@ -1,6 +1,3 @@
-import json
-
-
 class EntityMapping:
     def __init__(self, config: dict):
         # print("_____config entity mapping creation_______")

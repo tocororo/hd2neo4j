@@ -1,5 +1,5 @@
 from neo4j import GraphDatabase
-from uprchat.mapper.types.mapper_types import Node, Relation
+from hd2neo4j.types.mapper_types import Node, Relation
 
 
 class RepositorySingleton:

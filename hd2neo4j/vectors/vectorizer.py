@@ -1,6 +1,6 @@
-from uprchat.mapper.types.mapper_types import VectorStrategies
-from uprchat.mapper.vectors.strategies.bag_of_words import BagOfWords
-from uprchat.mapper.vectors.strategies.sentence_transformer import (
+from hd2neo4j.types.mapper_types import VectorStrategies
+from hd2neo4j.vectors.strategies.bag_of_words import BagOfWords
+from hd2neo4j.vectors.strategies.sentence_transformer import (
     TransformerVectorizer,
 )
 

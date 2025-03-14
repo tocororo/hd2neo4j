@@ -12,6 +12,7 @@ fastapi = "^0.111.1"
 neo4j = "^5.22.0"
 scikit-learn = "^1.5.2"
 sentence-transformers = "^3.3.1"
+pydantic-settings = "^2.8.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -24,7 +25,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-start = "uprchat.main:start"
+start = "hd2neo4j.main:start"
 
 [tool.black]
 line-length = 119
