@@ -1,0 +1,25 @@
+.tool-versions
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+.pytest_cache/
+.mypy_cache/
+.vscode/
+.idea/
+
+poetry.lock
+.python-version
+
+*.log
+
+# Distribution files and packages
+dist/
+build/
+*.egg-info/
+
+# System files
+.DS_Store
+Thumbs.db
