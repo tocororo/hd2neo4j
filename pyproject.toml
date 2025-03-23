@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hd2neo4j"
-version = "0.1.1"
+version = "0.1.2"
 description = "yet another tool for transforming heterogeneous data in to knowledge graph"
 authors = ["Jorge Luis Arencibia <jorge9815rdz@gmail.com>"]
 license = "GPL-3.0"
