@@ -8,7 +8,7 @@ rt = APIRouter(
 )
 
 
-@rt.get("/graph")
+@rt.get("")
 def get_graph():
     response = RepositoryService().get_graph()
     return response.records
@@ -28,6 +28,6 @@ def start_mapping(
     controller.start_mapping()
 
 
-@rt.post("/drop")
+@rt.delete("")
 def drop_db():
     RepositoryService().clean_graph_db()
