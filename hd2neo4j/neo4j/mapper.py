@@ -3,11 +3,14 @@ from hd2neo4j.mapping_config.mapping_config import (
     EntityMapping,
 )
 from hd2neo4j.utils.data_iterator import Data_Iterator
+from hd2neo4j.utils.utils import sanitize_str_value
 from ..types.mapper_types import Node, Relation
 import uuid as uuid_pkg
 from hd2neo4j.neo4j.repository import Neo4jRepository
 from hd2neo4j.vectors.vectorizer import VectorManager
 import logging
+import traceback
+
 
 logger = logging.getLogger(__name__)
 
@@ -83,8 +86,9 @@ class Mapper:
                         required_fields_error += 1
                         required_fields_ids.append(item_id)
 
-                except:
-                    exceptionsIds.append(item_id)
+                except Exception as e:
+                    exceptionsIds.append({'id':item_id, 'message': str(e)})
+                    traceback.print_exc()
 
             logger.info(f"{success_iteration} SUCCESSFULLY ENTRIES")
             logger.error(f" ON {len(exceptionsIds)} ITEMS")
@@ -244,7 +248,7 @@ class Mapper:
         properties_config,
         node: Node,
     ):
-        node.properties.update({properties_config.get(property_key): property_value})
+        node.properties.update({properties_config.get(property_key): sanitize_str_value(property_value)})
 
     def _process_relation(
         self,
@@ -253,7 +257,7 @@ class Mapper:
         properties_config: dict,
         node: Node,
     ):
-        logger.info(f" Processing relations of: ({node.label}) ")
+        # logger.info(f" Processing relations of: ({node.label}) ")
         relation_config: dict = properties_config.get(property_key)
         target_id, target_label, relation_label = ("",) * 3
         node_properties = {}
@@ -297,7 +301,7 @@ class Mapper:
                 if not target_object.get(key):
                     continue
 
-                node_properties.update({relation_config.get(key): target_object.get(key)})
+                node_properties.update({relation_config.get(key): sanitize_str_value(target_object.get(key))})
 
         node.relations.append(
             Relation(
