@@ -1,22 +1,20 @@
 from .neo4j.mapper import Mapper
 from .neo4j.repository import Neo4jRepository
 import json
-from hd2neo4j.config import get_settings
 from hd2neo4j.mapping_config.mapping_config import (
     MappingConfig,
 )
 import logging
 
+
+logging.basicConfig(filename="hd2neo4j.log", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 class RepositoryService:
-    st = get_settings()
-    repository = Neo4jRepository(st.neo4j_uri, st.neo4j_user, st.neo4j_pass, st.neo4j_db)
-
-    def __init__(self):
-        super().__init__()
-
+    def __init__(self, neo4j_uri:str, neo4j_user:str, neo4j_pass:str, neo4j_db:str):
+        self.repository = Neo4jRepository(neo4j_uri, neo4j_user, neo4j_pass, neo4j_db)
+        
     def get_repository(self):
         return self.repository
 
@@ -36,12 +34,11 @@ class RepositoryService:
 
 
 class MapperService:
-
-    def __init__(self, mapping_config_file, data_to_map_file):
+    def __init__(self, mapping_config, data_to_map, repository_service:RepositoryService):
         self.mapper = Mapper(
-            MappingConfig(json.loads(mapping_config_file)),
-            json.loads(data_to_map_file),
-            RepositoryService().get_repository(),
+            MappingConfig(mapping_config),
+            data_to_map,
+            repository_service.get_repository(),
         )
 
     def start_mapping(self):

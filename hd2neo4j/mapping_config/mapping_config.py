@@ -1,13 +1,7 @@
 class EntityMapping:
     def __init__(self, config: dict):
-        # print("_____config entity mapping creation_______")
-        # print(config)
-        # print(config.get("required"))
         self.config = config
-        # self.pid = self.config["pid"]
         self.name = self.config.get("name")
-        # # self.description = self.config["description"]
-        # self.destination_class = self.config["_class"]
         self.required = self.config.get("mapping").get("required")
         self.properties = self.config.get("mapping").get("properties")
         if self.properties.get("identifiers"):
@@ -20,22 +14,9 @@ class EntityMapping:
             self.vectorize = None
 
     def validate_required(self, instance):
-        """Validates that all required attributes are present in the instance
-
-            Args:
-                required_attributes (list): A list of attribute names that are required.
-                instance (dict): A dictionary representing the instance to validate.
-
-        Returns:
-            bool: True if all required attributes are present, False otherwise.
-
-        """
-        # Iterate over the list of required attributes
         for required_attribute in self.required:
-            # If any required attribute is missing from the instance JSON, return False
             if required_attribute not in instance:
                 return False
-        # All required attributes are present in the instance JSON, so return True
         return True
 
 

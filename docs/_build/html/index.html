@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>hd2neo4j &#8212; hd2neo4j  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="hd2neo4j">
+<h1>hd2neo4j<a class="headerlink" href="#hd2neo4j" title="Link to this heading">¶</a></h1>
+<p><strong>hd2neo4j</strong> is a tool for transforming heterogeneous data into knowledge graphs compatible with Neo4j.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>hd2neo4j enables the transformation of data from various sources and formats into a structured knowledge graph that can be imported into Neo4j. Its purpose is to simplify the integration and management of complex data—often originating from multiple sources—through a user-defined configuration.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>You can install hd2neo4j using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>hd2neo4j
+</pre></div>
+</div>
+</section>
+</section>
+<section id="how-to-use">
+<h1>How to Use<a class="headerlink" href="#how-to-use" title="Link to this heading">¶</a></h1>
+<p>To transform data into a Neo4j knowledge graph using <code class="docutils literal notranslate"><span class="pre">hd2neo4j</span></code>, follow these steps:</p>
+<section id="import-services">
+<h2>1. Import Services<a class="headerlink" href="#import-services" title="Link to this heading">¶</a></h2>
+<p>First, import the required classes from <code class="docutils literal notranslate"><span class="pre">hd2neo4j.services</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hd2neo4j.services</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepositoryService</span><span class="p">,</span> <span class="n">MapperService</span>
+</pre></div>
+</div>
+</section>
+<section id="connect-to-neo4j">
+<h2>2. Connect to Neo4j<a class="headerlink" href="#connect-to-neo4j" title="Link to this heading">¶</a></h2>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">RepositoryService</span></code> instance to connect to your Neo4j database:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r_service</span><span class="p">:</span> <span class="n">RepositoryService</span> <span class="o">=</span> <span class="n">RepositoryService</span><span class="p">(</span>
+    <span class="s2">&quot;neo4j://connection-uri:port&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;Neo4j_password&quot;</span><span class="p">,</span> <span class="s2">&quot;database_name&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="load-mapping-configuration-and-data">
+<h2>3. Load Mapping Configuration and Data<a class="headerlink" href="#load-mapping-configuration-and-data" title="Link to this heading">¶</a></h2>
+<p>You will need:</p>
+<ul class="simple">
+<li><p>A JSON configuration file that defines how the data should be mapped.</p></li>
+<li><p>An array or iterable of data entries to transform.</p></li>
+</ul>
+</section>
+<section id="run-the-mapping">
+<h2>4. Run the Mapping<a class="headerlink" href="#run-the-mapping" title="Link to this heading">¶</a></h2>
+<p>Initialize the <code class="docutils literal notranslate"><span class="pre">MapperService</span></code> and start the mapping process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m_service</span><span class="p">:</span> <span class="n">MapperService</span> <span class="o">=</span> <span class="n">MapperService</span><span class="p">(</span>
+    <span class="n">mapping_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="n">repository_service</span><span class="o">=</span><span class="n">r_service</span><span class="p">,</span>
+    <span class="n">data_to_map</span><span class="o">=</span><span class="n">data</span>
+<span class="p">)</span>
+
+<span class="n">m_service</span><span class="o">.</span><span class="n">start_mapping</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="optional-clean-the-database">
+<h2>5. Optional: Clean the Database<a class="headerlink" href="#optional-clean-the-database" title="Link to this heading">¶</a></h2>
+<p>You can clear the contents of the database before performing a new mapping:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r_service</span><span class="o">.</span><span class="n">clean_graph_db</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>This project is licensed under the <strong>GPL v3.0</strong>.</p>
+</section>
+<section id="author">
+<h2>Author<a class="headerlink" href="#author" title="Link to this heading">¶</a></h2>
+<p>Jorge Luis Arencibia Rodríguez</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">hd2neo4j</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Jorge Luis Arencibia.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
